@@ -4,7 +4,7 @@ from gramlist.gramlist_proccessor import GramlistProcessor
 from helpers.logger import get_logger
 
 
-# Initialize the skafos sdk
+# Initialize the skafos  sdk
 ska = Skafos()
 
 ingest_log = get_logger('gramlist-fetch')
