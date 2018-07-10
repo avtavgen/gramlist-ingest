@@ -96,7 +96,10 @@ class GramlistProcessor(object):
         followers = re.search(fl_pattern, info)
         followers = followers.group(1).replace(",", "")
         if followers.endswith("K"):
-            followers = followers.replace("K", "000")
+            if "." in followers:
+                followers = followers.replace(".", "").replace("K", "00")
+            else:
+                followers = followers.replace("K", "000")
         return int(followers)
 
     def get_location(self, info):
