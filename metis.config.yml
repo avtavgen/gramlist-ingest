@@ -1,0 +1,7 @@
+project_token: 2b32363ca2a5d9c97de46cd6
+name: gramlist-social-ingest
+jobs: 
+  - job_id: 892aa5fc-1da1-4761-bb31-91e7976fb4db
+    language: python
+    name: Main
+    entrypoint: "main.py"
