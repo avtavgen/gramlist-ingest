@@ -30,14 +30,17 @@ class GramlistProcessor(object):
     def _get_user_info(self, creator):
         categories = ["lifestyle", "travel", "beauty", "fashion"]
         user_data = dict()
+        engagement_rate = creator[2].strip()
+        if engagement_rate.endswith("%"):
+            engagement_rate = engagement_rate.replace("%", "")
         user_data["uri"] = "gramlist␟user␟{}".format(creator[0])
         user_data["ingested"] = False
         user_data["date"] = datetime.now().strftime("%Y-%m-%d")
         user_data["screen_name"] = creator[0]
-        user_data["engagement_rate"] = creator[2].strip()[:-1]
+        user_data["engagement_rate"] = engagement_rate
         user_data["categories"] = categories
         user_data["profile"] = self.get_description(creator[1])
-        user_data["followers"] = int(self.get_followers(creator[1]))
+        user_data["followers"] = self.get_followers(creator[1])
         user_data["location"] = self.get_location(creator[1])
         user_data["wow_growth"] = self.get_growth(creator[1])
         user_data["posting_average"] = self.get_posting_av(creator[1])
@@ -91,7 +94,10 @@ class GramlistProcessor(object):
     def get_followers(self, info):
         fl_pattern = "FOLLOWERS:\s*([^\s]+)"
         followers = re.search(fl_pattern, info)
-        return followers.group(1).replace(",", "")
+        followers = followers.group(1).replace(",", "")
+        if followers.endswith("K"):
+            followers = followers.replace("K", "000")
+        return int(followers)
 
     def get_location(self, info):
         l_pattern = "LOCATION:\s*(.+?)\n"
@@ -101,7 +107,10 @@ class GramlistProcessor(object):
     def get_growth(self, info):
         g_pattern = "W/O/W \s*GROWTH:\s*(-*\d*\.*\d+)"
         growth = re.search(g_pattern, info)
-        return growth.group(1)[:-1]
+        growth = growth.group(1)
+        if growth.endswith("%"):
+            growth = growth.replace("%", "")
+        return growth
 
     def get_posting_av(self, info):
         g_pattern = "DAILY POSTING AVERAGE:\s*(\d*\.*\d+)"
