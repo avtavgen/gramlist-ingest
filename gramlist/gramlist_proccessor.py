@@ -37,7 +37,7 @@ class GramlistProcessor(object):
         user_data["engagement_rate"] = creator[2].strip()[:-1]
         user_data["categories"] = categories
         user_data["profile"] = self.get_description(creator[1])
-        user_data["followers"] = self.get_followers(creator[1])
+        user_data["followers"] = int(self.get_followers(creator[1]))
         user_data["location"] = self.get_location(creator[1])
         user_data["wow_growth"] = self.get_growth(creator[1])
         user_data["posting_average"] = self.get_posting_av(creator[1])

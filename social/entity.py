@@ -30,7 +30,7 @@ class SocialStatements:
             "is_verified": "boolean",
             "profile": "text",
             "following": "int",
-            "followers": "bigint",
+            "followers": "int",
             "categories": "set<text>",
             "url": "text",
             "lang": "text",
